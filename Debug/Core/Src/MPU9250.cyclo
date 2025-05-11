@@ -1,0 +1,3 @@
+../Core/Src/MPU9250.c:14:6:MPU9250_Init	5
+../Core/Src/MPU9250.c:64:7:MPU9250_ReadX	1
+../Core/Src/MPU9250.c:74:7:MPU9250_ReadY	1
