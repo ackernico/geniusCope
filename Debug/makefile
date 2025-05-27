@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := TUT_ST7735_F4
+BUILD_ARTIFACT_NAME := trabalhoSPI
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-TUT_ST7735_F4.elf \
+trabalhoSPI.elf \
 
 MAP_FILES += \
-TUT_ST7735_F4.map \
+trabalhoSPI.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-TUT_ST7735_F4.list \
+trabalhoSPI.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: TUT_ST7735_F4.elf secondary-outputs
+main-build: trabalhoSPI.elf secondary-outputs
 
 # Tool invocations
-TUT_ST7735_F4.elf TUT_ST7735_F4.map: $(OBJS) $(USER_OBJS) C:\Users\Nicolas\ Acker\Documents\Trabalhos\ Liberato\Sistemas\ Microprocessados\ II\TUT_ST7735_F4\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "TUT_ST7735_F4.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Nicolas Acker\Documents\Trabalhos Liberato\Sistemas Microprocessados II\TUT_ST7735_F4\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TUT_ST7735_F4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+trabalhoSPI.elf trabalhoSPI.map: $(OBJS) $(USER_OBJS) C:\Users\Nicolas\ Acker\Documents\Trabalhos\ Liberato\Sistemas\ Microprocessados\ II\trabalhoSPI\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "trabalhoSPI.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Nicolas Acker\Documents\Trabalhos Liberato\Sistemas Microprocessados II\trabalhoSPI\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="trabalhoSPI.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-TUT_ST7735_F4.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "TUT_ST7735_F4.list"
+trabalhoSPI.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "trabalhoSPI.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) TUT_ST7735_F4.elf TUT_ST7735_F4.list TUT_ST7735_F4.map default.size.stdout
+	-$(RM) default.size.stdout trabalhoSPI.elf trabalhoSPI.list trabalhoSPI.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

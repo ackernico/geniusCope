@@ -7,13 +7,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -58,14 +57,16 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define ledU_Pin GPIO_PIN_0
-#define ledU_GPIO_Port GPIOC
-#define ledR_Pin GPIO_PIN_1
-#define ledR_GPIO_Port GPIOC
-#define ledD_Pin GPIO_PIN_2
-#define ledD_GPIO_Port GPIOC
-#define ledL_Pin GPIO_PIN_3
-#define ledL_GPIO_Port GPIOC
+#define userButton_Pin GPIO_PIN_13
+#define userButton_GPIO_Port GPIOC
+#define ledError_Pin GPIO_PIN_0
+#define ledError_GPIO_Port GPIOC
+#define ledProceed_Pin GPIO_PIN_1
+#define ledProceed_GPIO_Port GPIOC
+#define buzzer_Pin GPIO_PIN_0
+#define buzzer_GPIO_Port GPIOB
+#define RESET_Pin GPIO_PIN_7
+#define RESET_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 

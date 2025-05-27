@@ -1,0 +1,5 @@
+../Core/Src/genius.c:22:6:geniusInit	16	static
+../Core/Src/genius.c:42:6:geniusDifficulty	16	static
+../Core/Src/genius.c:62:6:geniusToggleCircle	16	static
+../Core/Src/genius.c:106:5:geniusGetChoice	24	static
+../Core/Src/genius.c:118:5:geniusGame	704	static

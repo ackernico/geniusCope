@@ -61,21 +61,51 @@ void MPU9250_Init()
 	}
 }
 
-float MPU9250_ReadX()
+int MPU9250_Gyro_ReadX()
+{
+	uint8_t data[2];
+	int16_t xGyro;
+	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_GYRO_DATA_X, 1, data, 2, 100);
+	xGyro = ((int16_t)data[0] << 8) + data[1];
+
+	return xGyro;
+}
+
+int MPU9250_Gyro_ReadY()
+{
+	uint8_t data[2];
+	int16_t yGyro;
+	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_GYRO_DATA_Y, 1, data, 2, 100);
+	yGyro = ((int16_t)data[0] << 8) + data[1];
+
+	return yGyro;
+}
+
+int MPU9250_Gyro_ReadZ()
+{
+	uint8_t data[2];
+	int16_t zGyro;
+	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_GYRO_DATA_Z, 1, data, 2, 100);
+	zGyro = ((int16_t)data[0] << 8) + data[1];
+
+	return zGyro;
+}
+
+int MPU9250_Acc_ReadX()
 {
 	uint8_t data[2];
 	int16_t xAcc;
-	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_DATA_X, 1, data, 2, 100);
+	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_ACC_DATA_X, 1, data, 2, 100);
 	xAcc = ((int16_t)data[0] << 8) + data[1];
 
 	return xAcc;
 }
 
-float MPU9250_ReadY()
+int MPU9250_Acc_ReadY()
 {
 	uint8_t data[2];
 	int16_t yAcc;
-	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_DATA_Y, 1, data, 2, 100);
+	HAL_I2C_Mem_Read(&hi2c1, (DEVICE_ADRESS << 1) + 1, REG_ACC_DATA_Y, 1, data, 2, 100);
 	yAcc = ((int16_t)data[0] << 8) + data[1];
 
 	return yAcc;
