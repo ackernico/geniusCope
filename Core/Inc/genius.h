@@ -15,18 +15,21 @@
 #define EASY_DELAY        300
 #define MEDIUM_DELAY      200
 #define HARD_DELAY        75
-#define IMPOSSIBLE_DELAY  25
+#define IMPOSSIBLE_DELAY  10
 /*Circle radius*/
 #define RADIUS 23
 /*Gyroscope parameter*/
-#define PARAM 3500
+#define PARAM 3000
 /*X Axis coordinates*/
-#define COORD_X_UP         64
-#define COORD_X_DOWN       64
-#define COORD_X_LEFT       26
-#define COORD_X_RIGHT      101
-#define COORD_X_SCORE      59
-#define COORD_X_DEFEATMSG  5
+#define COORD_X_UP          64
+#define COORD_X_DOWN        64
+#define COORD_X_LEFT        26
+#define COORD_X_RIGHT       101
+#define COORD_X_SCORE       59
+#define COORD_X1_DEFEATMSG  7
+#define COORD_X2_DEFEATMSG  55
+#define COORD_X3_DEFEATMSG  87
+#define COORD_X_FINALMSG	36
 /*Y Axis coordinates*/
 #define COORD_Y_UP         26
 #define COORD_Y_DOWN       101
@@ -34,6 +37,7 @@
 #define COORD_Y_RIGHT      64
 #define COORD_Y_SCORE      55
 #define COORD_Y_DEFEATMSG  54
+#define COORD_Y_FINALMSG   80
 
 /*Functions definition*/
 

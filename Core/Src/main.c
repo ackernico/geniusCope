@@ -57,11 +57,12 @@
 int16_t x;
 int16_t y;
 
+char dataMonitor;
+
 int checkVictory;
 int resetGame = 0;
 
-int diff;
-diff = 3;
+int diff = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -119,6 +120,7 @@ int main(void)
 	ST7735_Init(0);
 	geniusInit();
 	geniusDifficulty(diff);
+	HAL_UART_Receive_IT(&huart2, &dataMonitor, 1);
 	//To test the display, uncomment the line below:
 	//testAll();
 
@@ -131,7 +133,6 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-
 		checkVictory = 1;
 		resetGame = HAL_GPIO_ReadPin(userButton_GPIO_Port, userButton_Pin);
 		if (resetGame == GPIO_PIN_RESET)
@@ -146,7 +147,6 @@ int main(void)
 		{
 			x = MPU9250_Gyro_ReadX();
 			y = MPU9250_Gyro_ReadY();
-			printf("X: %d Y: %d\n", x, y);
 			checkVictory = geniusGame();
 			HAL_Delay(100);
 		}
@@ -201,6 +201,37 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if (huart->Instance == USART2) {
+		char debug[50];
+
+		switch (dataMonitor) {
+		case '0':
+			sprintf(debug, "Difficulty set to easy\n", dataMonitor);
+			diff = 0;
+			break;
+		case '1':
+			sprintf(debug, "Difficulty set to medium\n", dataMonitor);
+			diff = 1;
+			break;
+		case '2':
+			sprintf(debug, "Difficulty set to hard\n", dataMonitor);
+			diff = 2;
+			break;
+		case '3':
+			sprintf(debug, "Difficulty set to impossible. Good luck :)\n", dataMonitor);
+			diff = 3;
+			break;
+		default:
+			break;
+		}
+		HAL_UART_Transmit_IT(&huart2, debug, strlen(debug));
+		geniusDifficulty(diff);
+		HAL_UART_Receive_IT(&huart2, &dataMonitor, 1);
+	}
+}
+
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM11)

@@ -16,8 +16,10 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <strings.h>
 
 int difficulty;
+extern UART_HandleTypeDef huart2;
 
 void geniusInit()
 {
@@ -63,13 +65,13 @@ void geniusToggleCircle(int position)
 {
 	switch(position)
 	{
-/*  case n:
+	/*  case n:
 		Fill the circle with it color
 		Delay according to the difficulty chosen
 		Initiate the timer with it frequency
 		Fill the circle with it color on low opacity
 		Stop the timer
-*/
+	 */
 	case 0:
 		fillCircle(COORD_X_UP, COORD_Y_UP, RADIUS-1, BLUE);
 		HAL_Delay(difficulty);
@@ -106,7 +108,7 @@ void geniusToggleCircle(int position)
 int geniusGetChoice(int xA, int yA)
 {
 	int choice;
-	if(xA >= PARAM)        choice = 0;  //UP
+	if(xA >= PARAM-300)        choice = 0;  //UP
 	else if(xA <= -PARAM)  choice = 1;  //DOWN
 	else if(yA >= PARAM)   choice = 2;  //LEFT
 	else if(yA <= -PARAM)  choice = 3;  //RIGHT
@@ -127,12 +129,16 @@ int geniusGame()
 	int x, y;
 	/*Displays buffer*/
 	char buffer[50];
+	/*Debug message*/
+	char debugMsg[50];
 
 	while (!defeat)
 	{
 		rightOnes[score] = rand() % 4;
 		snprintf(buffer, 40, "%i", score);
 		ST7735_WriteString(COORD_X_SCORE, COORD_Y_SCORE, buffer, Font_11x18, BLACK, WHITE);
+		snprintf(buffer, 40, "%i\n", score);
+		HAL_UART_Transmit_IT(&huart2, &buffer, strlen(buffer));
 
 		for(int i = 0; i <= score; i++) //Showing all the sequence
 		{
@@ -150,7 +156,6 @@ int geniusGame()
 			} while (choice == -1);
 
 			geniusToggleCircle(choice);
-			printf("Choice: %i\nRight one: %i\n", choice, rightOnes[i]);
 
 			if (choice != rightOnes[i])
 			{
@@ -166,19 +171,41 @@ int geniusGame()
 		}
 		else
 		{
-			ST7735_WriteString(COORD_X_DEFEATMSG, COORD_Y_DEFEATMSG, "DERROTA", Font_16x26, WHITE, BLUE);
-			/*Defeat sound effect*/
+
+			/*Defeat message and sound effect*/
 			HAL_TIM_Base_Start_IT(&htim11);
+			ST7735_WriteString(COORD_X1_DEFEATMSG, COORD_Y_DEFEATMSG, "DER", Font_16x26, WHITE, BLUE);
 			HAL_Delay(350);
 			HAL_TIM_Base_Stop_IT(&htim11);
+
 			HAL_Delay(50);
+
 			HAL_TIM_Base_Start_IT(&htim10);
+			ST7735_WriteString(COORD_X2_DEFEATMSG, COORD_Y_DEFEATMSG, "RO", Font_16x26, WHITE, BLUE);
 			HAL_Delay(250);
 			HAL_TIM_Base_Stop_IT(&htim10);
+
 			HAL_Delay(50);
+
 			HAL_TIM_Base_Start_IT(&htim7);
+			ST7735_WriteString(COORD_X3_DEFEATMSG, COORD_Y_DEFEATMSG, "TA", Font_16x26, WHITE, BLUE);
 			HAL_Delay(250);
 			HAL_TIM_Base_Stop_IT(&htim7);
+
+			snprintf(buffer, 40, "%i pontos", score);
+
+			if(score >= 10)
+			{
+				ST7735_WriteString(COORD_X_FINALMSG, COORD_Y_FINALMSG+1, buffer, Font_7x10, BLACK, WHITE);
+				drawRect(COORD_X_FINALMSG-1, COORD_Y_FINALMSG, 56+2+7, 11+1, BLUE);
+				drawRect(COORD_X_FINALMSG, COORD_Y_FINALMSG, 56+7, 11, WHITE);
+			}
+			else
+			{
+				ST7735_WriteString(COORD_X_FINALMSG, COORD_Y_FINALMSG+1, buffer, Font_7x10, BLACK, WHITE);
+				drawRect(COORD_X_FINALMSG-1, COORD_Y_FINALMSG, 56+2, 11+1, BLUE);
+				drawRect(COORD_X_FINALMSG, COORD_Y_FINALMSG, 56, 11, WHITE);
+			}
 		}
 	}
 
